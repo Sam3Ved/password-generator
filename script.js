@@ -88,18 +88,51 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+//Empty array ready for user selections
+let userSelect = []
+let passwordLength = 0
 // Function to prompt user for password options
 function getPasswordOptions() {
+    passwordLength = parseInt(prompt("How long would you like your password to be be?" + "\nEnter a number between 10 and 64!"))
+    if (passwordLength < 10 || passwordLength > 64 || isNaN(passwordLength)) {
+      alert("Your password does not meet the required length!")
+    } 
+      else {
+        let hasLowercase = confirm("Would you like lowercase characters?")
+        if (hasLowercase === true) {
+          userSelect = userSelect.concat(lowerCasedCharacters)
+        }
+        let hasUppercase = confirm("Would you like uppercase characters")
+        if (hasUppercase === true) {
+          userSelect = userSelect.concat(upperCasedCharacters)
+        }
+        let hasNumeric = confirm("Would you like numeric characters?")
+        if (hasNumeric === true) {
+          userSelect = userSelect.concat(numericCharacters)
+        }
+        let hasSpecial = confirm("Would you like special characters?")
+        if (hasSpecial === true) {
+          userSelect = userSelect.concat(specialCharacters)
+        }
+        if (hasLowercase === false && hasUppercase === false && hasNumeric === false && hasSpecial === false) {
+          alert("You must select a character type!")
+          
+        }}
 
-}
-
-// Function for getting a random element from an array
-function getRandom(arr) {
-
+    return
 }
 
 // Function to generate password with user input
 function generatePassword() {
+  getPasswordOptions()
+  let chosenPassword = ""
+  for (let i = 0; i < passwordLength; i++) {
+    let randomChar = Math.floor(Math.random() * userSelect.length)
+    chosenPassword = chosenPassword + userSelect[randomChar]
+    
+  }
+ 
+  return chosenPassword
 
 }
 
@@ -116,5 +149,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
-
-/* Prompt for password length 
